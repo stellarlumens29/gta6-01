@@ -32,8 +32,10 @@ with zero network requests, zero libraries, zero build step.
 | SPACE | Handbrake |
 | H | Horn |
 | M | Start / retry the current story job |
+| R | Reload from reserve ammo |
 | N | Mute / unmute sound |
 | P / ESC | Pause (S saves, Q quits to title) |
+| 1 / 2 / 3 | Buy at a shop |
 
 ## Systems (all live, all wired together)
 
@@ -74,39 +76,38 @@ with zero network requests, zero libraries, zero build step.
 main.ts            Node 22 program: copies game/ + screenshots/ to /output,
                    writes /output/dossier.json with vendor/makefun-game.ts
 game/index.html    the game shell (canvas 1280x720)
-game/src/main.js       boot, loop, screens, stealing, saving
-game/src/city.js       Velmara: districts, buildings, canal, beach
-game/src/render.js     2.5D golden-hour renderer + live minimap
-game/src/hud.js        HUD, objective tracker, menus, end screens
-game/src/player.js     Mara on foot and in a car
-game/src/vehicles.js   car physics, traffic AI, police pursuit driving
-game/src/police.js     wanted system, VPD force, busted/wasted
-game/src/peds.js       pedestrians (stroll, flee gunfire)
-game/src/combat.js     bullets, enemies, particles
-game/src/missions.js   the 8-job story + mission runner
-game/src/economy.js    gold bars, taxi fares, shops
-game/src/audio.js      synthesized WebAudio SFX + music
-game/src/input.js      keyboard + mouse
-game/src/save.js       localStorage save/load
-game/src/shots.js      deterministic screenshot scenes (?shot=…)
-game/src/selftest.js   18 headless logic checks (?selftest=1)
-game/src/util.js       seeded RNG, math, collision
+game/src/boot.js       fresh game state, update loop, screens, entry points
+game/src/rng.js        seeded RNG (mulberry32) + math helpers
+game/src/world.js      Velmara: districts, roads, buildings, canal, beach
+game/src/view.js       2.5D golden-hour renderer + live minimap
+game/src/panel.js      HUD, objective tracker, menus, end screens
+game/src/traffic.js    car physics, traffic AI, stealing, getting in/out
+game/src/heat.js       wanted system, VPD force, busted/wasted
+game/src/walkers.js    pedestrians (stroll, flee gunfire)
+game/src/fight.js      bullets, enemies, particles
+game/src/story.js      the 8-job story + mission runner
+game/src/side.js       gold bars, taxi fares, shops
+game/src/sound.js      synthesized WebAudio SFX + music
+game/src/keys.js       keyboard + mouse
+game/src/store.js      localStorage save/load
+game/src/scenes.js     deterministic screenshot scenes (?shot=…)
+game/src/check.js      18 headless logic checks (?selftest=1)
 screenshots/          4 real renders of the game's own code, 1280x720
 test-game.mjs          node verification (determinism + gate self-checks)
 ```
 
-## Verification (all done 21 Nov 2026, WIB)
+## Verification (all done 22 Nov 2026, WIB)
 
 - Headless self-test `?selftest=1`: **18/18 PASS** — deterministic city,
   mission 1 completion, wanted raise + cool-off, target-car steal, bullet
   hits, gold payout, shop sale, taxi pickup + dropoff, 5s traffic sim,
-  busted check, save/load round-trip, render smoke test, and a scripted
-  **full 8-mission story playthrough: 8/8 complete, debt $10,000 → $2,050,
-  cash $250 → $9,224**.
+  busted check, save/load round-trip, render smoke test, minimap, and a
+  scripted **full 8-mission story playthrough: 8/8 complete, debt $10,000
+  → $2,050, cash $250 → $8,200**.
 - `node test-game.mjs`: **15/15 PASS** — `main.ts` run twice writes
-  byte-identical output (23 files), game/ 18 files / 124.7 KiB, index.html
-  649 B, 4 screenshots 73–113 KiB each, no network references, dossier
-  653 KiB (cap 1.5 MiB).
+  byte-identical output (22 files), game/ 17 files / 115.1 KiB, index.html
+  684 B, 4 screenshots 84–108 KiB each, no network references, dossier
+  606.6 KiB (cap 1.5 MiB), vendor copy sha-verified against the kit.
 - Plain load in headless Chromium: **no console errors**.
 - Screenshots visually inspected: title, driving on the Neon Strip,
   3-star VPD chase, dockside shootout — each shows the HUD, minimap,
@@ -116,7 +117,7 @@ test-game.mjs          node verification (determinism + gate self-checks)
 
 1. `1-title.jpg` — title screen, story hook, menu.
 2. `2-drive.jpg` — driving the yellow Veloce GT on the Neon Strip, job 1
-   active, traffic, canal, minimap, 237 km/h.
+   active, traffic, canal, minimap, 236 km/h.
 3. `3-chase.jpg` — 3-star MANHUNT, two VPD interceptors on the tail,
    objective beacon over the yellow GT, 209 km/h.
 4. `4-mission.jpg` — dockside ambush on foot: Marlin crew shooting,

@@ -1,1 +1,1 @@
-[{"name":"1-title.jpg","query":"?shot=title&seed=1"},{"name":"2-drive.jpg","query":"?shot=drive&seed=1"},{"name":"3-chase.jpg","query":"?shot=chase&seed=1"},{"name":"4-mission.jpg","query":"?shot=mission&seed=1"}]
+{"jpegQuality":82,"seed":1,"shots":[{"file":"1-title.jpg","name":"title","url":"?shot=title&seed=1"},{"file":"2-drive.jpg","name":"drive","url":"?shot=drive&seed=1"},{"file":"3-chase.jpg","name":"chase","url":"?shot=chase&seed=1"},{"file":"4-mission.jpg","name":"mission","url":"?shot=mission&seed=1"}],"size":{"height":720,"width":1280}}

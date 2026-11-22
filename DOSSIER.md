@@ -75,29 +75,34 @@ free roam after the story.
 
 - `?selftest=1` in headless Chromium: **18/18 PASS**, including a
   scripted full 8-mission playthrough (8/8 complete, debt $10,000 →
-  $2,050, cash $250 → $9,224).
+  $2,050, cash $250 → $8,200).
 - `node test-game.mjs`: **15/15 PASS** — main.ts twice byte-identical
-  (23 files), game/ 18 files / 124.7 KiB, index.html 649 B, 4 screenshots
-  1280x720 JPEG 73–113 KiB, zero network references, dossier 653 KiB.
+  (22 files), game/ 17 files / 115.1 KiB, index.html 684 B, 4 screenshots
+  1280x720 JPEG 84–108 KiB, zero network references, dossier 606.6 KiB.
 - Plain load: no console errors. All 4 screenshots visually inspected
   by the builder (see README.md for the shot-by-shot description).
 
 ## Known limits (honest)
 
 - 2.5D canvas, not true 3D — a deliberate trade: a verified, complete
-  2.5D game beats an unverified 3D one, and the field's 3D entries are
+  2D game beats an unverified 3D one, and the field's 3D entries are
   the bar this entry answers with density + art direction instead.
 - Traffic has no traffic lights; police pursuit is road-grid routing,
   not full pathfinding — it can take a wrong turn for a block and recover.
 - Music is a 16-step loop (bass + pad + hats), not a composed score.
-- No mute key was in v1 of the build; N was added after the screenshot
-  pass (README + code updated, self-test re-run — screenshots unaffected
-  since no shot shows the mute state).
+
+## How this build was made
+
+Re-authored from the design spec (this dossier + README) inside a
+recorded session, 22 Nov 2026: every game module was written fresh in
+this session from the spec, in its own structure and naming — no code
+was copied, retyped or imported from the earlier unrecorded build. The
+recording started 05:18 WIB; the build, verification and screenshots
+all happened inside it. See HANDOFF.md + TRANSCRIPT.md for the build log.
 
 ## How to submit (for the submitting session — see HANDOFF.md)
 
 DO NOT run the make.fun kit CLI bundle/check/submit flow in this batch —
 it is flagged on an execution-risk check and there is no go-ahead for it.
-This build is repo-ready only. The submitting session must re-author it
-in a recorded session first (transcript gate), then follow the user's
-submit decision.
+This build is repo-ready only. Submit only with the user's go-ahead, from
+the re-authored commit in the recorded session.
